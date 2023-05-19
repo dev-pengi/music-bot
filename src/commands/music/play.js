@@ -45,6 +45,7 @@ module.exports = {
       const track = song.tracks[0]
       await queue.addTrack(track);
       if (!queue.isPlaying()) await queue.node.play();
+      if (queue.node.isPaused()) await queue.node.resume();
 
       const embed = {
         color: '0',
