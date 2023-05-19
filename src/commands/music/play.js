@@ -50,13 +50,11 @@ module.exports = {
         color: '0',
         title: 'Now Playing',
         description: `[${track.title}](${track.url})`,
-        // image: { url: track.thumbnail }, 
         thumbnail: {
           url: `${track.raw.thumbnail.url}`,
         },
         footer: { text: `by ${track.author}・${track.duration}` }
       }
-      console.log(track.thumbnail)
 
       message.reply({ embeds: [embed] });
 
