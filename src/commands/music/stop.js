@@ -3,7 +3,7 @@ const { embedReply } = require("../../../events/tools");
 const { emojis } = require("../../../config/config.json");
 
 module.exports = {
-    name: "pause",
+    name: "stop",
     description: "pause a song",
     async run(message, args, client) {
         try {
