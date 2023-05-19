@@ -7,7 +7,7 @@ module.exports = {
     description: "pause a song",
     async run(message, args, client) {
         try {
-            throw new Error("تحت الصيانة, تم نقل الامر لـ \`${v2pause}\`.");
+            throw new Error("تحت الصيانة, تم نقل الامر لـ \`v2pause\`.");
         } catch (err) {
             embedReply({
                 message,
