@@ -1,0 +1,27 @@
+{
+    "embedColor": "#efd53a",
+    "errorColor": "#dd0000",
+    "footer": "",
+    "prefix": "v2",
+    "owners": [
+        "851940792365088789",
+        "397737293059981315"
+    ],
+    "emojis": {
+        "true": "✅",
+        "false": "❌",
+        "warning": "⚠️",
+        "soundHigh": "🔊",
+        "soundLow": "🔉",
+        "muted": "🔈",
+        "music": "🎵",
+        "tones": "🎶",
+        "up": "🔼",
+        "down": "🔽",
+        "left": "◀️",
+        "right": "▶️",
+        "doubleLeft": "⏪",
+        "doubleRight": "⏩"
+    },
+    "line": "https://cdn.discordapp.com/attachments/1077168175503900732/1086209326403821568/37.png"
+}
