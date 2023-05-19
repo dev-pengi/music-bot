@@ -2,7 +2,6 @@ const { prefix, emojis } = require('../../../config/config.json')
 const tools = require('../../../events/tools')
 
 module.exports = async (client, message) => {
-    console.log('here')
     if (message.author.bot) return;
 
     const [commandName, ...args] = message.content.slice(0).trim().split(/ +/);
