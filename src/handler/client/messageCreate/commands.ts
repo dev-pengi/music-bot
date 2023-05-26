@@ -1,8 +1,10 @@
-const { prefix, emojis } = require('../../../config/config.json')
-const tools = require('../../../events/tools')
+import { Client, GuildMember, Message, Snowflake } from 'discord.js';
+import { prefix, emojis } from '../../../config/config.json';
+import { embedReply } from '../../../events/tools';
 
-module.exports = async (client, message) => {
+export default async (client: Client, message: Message): Promise<void> => {
     if (message.author.bot) return;
+    if (!message.guild) return;
 
     const [commandName, ...args] = message.content.slice(0).trim().split(/ +/);
 
@@ -19,28 +21,29 @@ module.exports = async (client, message) => {
         if (specifics.includes(id))
             return runCommand();
         else
-            return false;
+            return;
     }
 
     if (roles) {
-        const hasRoleOrAdmin = message.guild.members.cache.get(id).roles.cache.some(role => roles.includes(role.id)) ||
-            message.guild.members.cache.get(id).permissions.has('ADMINISTRATOR');
+        const hasRoleOrAdmin = message.guild.members.cache.get(id)?.roles.cache.some(role => roles.includes(role.id)) ||
+            message.guild.members.cache.get(id)?.permissions.has('Administrator');
         if (!hasRoleOrAdmin) return;
     }
     if (permissions) {
-        const member = message.member;
-        const botId = client.user.id;
-        if (permissions.user && !member.permissions.has(permissions.user)) return;
+        const member: GuildMember | null = message.member;
+        const botId: Snowflake | undefined = client.user?.id;
+        if (permissions.user && !member?.permissions.has(permissions.user)) return;
 
     }
-    if (!message.guild.members.me.permissions.has('ADMINISTRATOR')) {
-        return tools.embedReply({
+    if (!message.guild.members.me?.permissions.has('Administrator')) {
+        embedReply({
             message,
             content: `احتاج الى صلاحية \`ADMINISTRATOR\` من اجل تنفيذ هذا الامر`,
             bold: true,
             emoji: emojis.false,
             error: true
-        })
+        });
+        return;
     }
     runCommand();
 

@@ -1,0 +1,28 @@
+{
+    "embedColor": "#efd53a",
+    "errorColor": "#dd0000",
+    "footer": "",
+    "prefix": "v2",
+    "owners": [
+        "851940792365088789",
+        "397737293059981315"
+    ],
+    "emojis": {
+        "true": "✅",
+        "false": "❌",
+        "warning": "⚠️",
+        "back": "<:back:1111514594750500885>",
+        "cancel": "<:cancel:1111514602296057896>",
+        "heart": "<:heart:1111514609820631091>",
+        "next": "<:next:1111514612400148492>",
+        "pause": "<:pause:1111513531163103292>",
+        "play": "<:playbutton:1111514615675879464>",
+        "repeat": "<:repeat:1111514620272857088>",
+        "replay": "<:replay:1111514624181932102>",
+        "forward": "<:forward:1111514605966069770>",
+        "backward": "<:backward:1111514597913022565>",
+        "volumefilled": "<:volumefilled:1111514630741827606>",
+        "volumelow": "<:volumelower:1111514636240572426>"
+    },
+    "line": "https://cdn.discordapp.com/attachments/1077168175503900732/1086209326403821568/37.png"
+}

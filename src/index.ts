@@ -1,8 +1,9 @@
 console.clear();
-require('dotenv').config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 //Discord
-const { Client, GatewayIntentBits, Partials } = require('discord.js')
+import { Client, GatewayIntentBits, Partials } from 'discord.js';
 
 const client = new Client({
     intents: [
@@ -17,8 +18,8 @@ const client = new Client({
 });
 
 //Events
-const connections = require('./events/connection')
-const handler = require('./handler')
+import connections from './events/connection';
+import handler from './handler';
 
 
 //Errors handler
@@ -33,12 +34,6 @@ process.on('uncaughtExceptionMonitor', (err, origin) => {
     console.log(err);
     console.log("🟥 Origin: " + origin)
 });
-// process.on("multipleResolves", (type, promise, reason) => {
-//     if (reason.toLocaleString() === "Error: Cannot perform IP discovery - socket closed") return;
-// });
-// process.on('multipleResolves', (type, promise, reason) => {
-//     console.log(type + promise + reason)
-// });
 
 // execute events
 connections(client)

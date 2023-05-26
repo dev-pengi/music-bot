@@ -1,4 +1,4 @@
-const checkCommandModule = (cmdName, cmdModule) => {
+const checkCommandModule = (cmdName: string, cmdModule: any): boolean => {
     if (!cmdModule.hasOwnProperty('name'))
         throw new Error(`${cmdName} command module does not have property 'name'`);
 
@@ -11,9 +11,9 @@ const checkCommandModule = (cmdName, cmdModule) => {
     return true;
 }
 
-const checkProperties = (cmdName, cmdModule) => {
+const checkProperties = (cmdName: string, cmdModule: any): boolean => {
     if (typeof cmdModule.name !== 'string')
-        throw new Error(`${cmdName} command: name must be a function`);
+        throw new Error(`${cmdName} command: name must be a string`);
 
     if (typeof cmdModule.description !== 'string')
         throw new Error(`${cmdName} command: description must be a string`);
@@ -24,7 +24,7 @@ const checkProperties = (cmdName, cmdModule) => {
     return true;
 }
 
-module.exports = {
+export {
     checkCommandModule,
     checkProperties
-}
+};
