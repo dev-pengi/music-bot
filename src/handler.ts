@@ -110,7 +110,7 @@ function executeEvents(client: Client): void {
   const clientDirectory = __dirname + '/handler/client/';
 
   loadCommands(client, commandsDirectory)
-    // .then(() => loadButtons(client, buttonsDirectory))
+    .then(() => loadButtons(client, buttonsDirectory))
     .then(() => loadEvents(client, clientDirectory))
     .then(() => {
       setUpPlayer(client);
