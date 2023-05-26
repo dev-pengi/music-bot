@@ -4,3 +4,4 @@
 /cache/*.json
 /package-lock.json
 /config/tokens.json
+/dist
