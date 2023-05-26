@@ -89,6 +89,27 @@ function interactionEmbed({ interaction, content, ephemeral, error, bold, emoji 
     }
 }
 
+function interactionEmbedFollow({ interaction, content, ephemeral, error, bold, emoji }: InteractionEmbedOptions): Promise<any> {
+    if (!interaction) throw new Error('Invalid interaction');
+    if (!content.trim().length) throw new Error('Message cannot be empty');
+    if (emoji) content = `${emoji} | ${content}`;
+    if (bold) content = `**${content}**`;
+
+
+    const color: number = getColor(error);
+
+    const embed: any = {
+        description: content,
+        color
+    };
+
+    try {
+        return interaction.followUp({ embeds: [embed], ephemeral: ephemeral });
+    } catch (err: any) {
+        throw new Error(err.message);
+    }
+}
+
 function interactionEmbedEdit({ interaction, content, error, bold, emoji }: InteractionEmbedEditOptions): Promise<any> {
     if (!interaction) throw new Error('Invalid interaction');
     if (!content.trim().length) throw new Error('Message cannot be empty');
@@ -204,6 +225,7 @@ export {
     EmbedReplyOptions,
     EmbedEditOptions,
     interactionEmbed,
+    interactionEmbedFollow,
     interactionEmbedEdit,
     embed,
     embedMemberOptions,
