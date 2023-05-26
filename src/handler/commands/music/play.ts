@@ -27,6 +27,7 @@ export default {
             channel,
           },
           leaveOnEmpty: false,
+          leaveOnEnd: false,
         });
       }
 
@@ -63,62 +64,41 @@ export default {
         footer: { text: `by ${track.author}・${track.duration}` }
       }
 
-      const repeat = new ButtonBuilder()
-        .setCustomId('repeat')
+      const backward = new ButtonBuilder()
+        .setCustomId('songloop')
         .setEmoji(emojis.replay)
         .setStyle(ButtonStyle.Primary);
 
-      const back = new ButtonBuilder()
-        .setCustomId('back')
-        .setEmoji(emojis.back)
-        .setStyle(ButtonStyle.Success);
-
       const pause = new ButtonBuilder()
-        .setCustomId('pause')
-        .setEmoji(emojis.pause)
+        .setCustomId('autoplay')
+        .setEmoji(emojis.play)
         .setStyle(ButtonStyle.Danger);
 
-      const next = new ButtonBuilder()
-        .setCustomId('next')
-        .setEmoji(emojis.next)
-        .setStyle(ButtonStyle.Success);
-
-      const loop = new ButtonBuilder()
-        .setCustomId('loop')
+      const forward = new ButtonBuilder()
+        .setCustomId('queueloop')
         .setEmoji(emojis.repeat)
         .setStyle(ButtonStyle.Primary);
 
       const topRow = new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(repeat, back, pause, next, loop);
+        .addComponents(backward, pause, forward);
 
-      const soundDown = new ButtonBuilder()
-        .setCustomId('sound-down')
+      const volumelow = new ButtonBuilder()
+        .setCustomId('volumedown')
         .setEmoji(emojis.volumelow)
         .setStyle(ButtonStyle.Primary);
 
-      const backward = new ButtonBuilder()
-        .setCustomId('backward')
-        .setEmoji(emojis.backward)
-        .setStyle(ButtonStyle.Success);
-
-      const clear = new ButtonBuilder()
-        .setCustomId('clear')
-        .setEmoji(emojis.cancel)
+      const next = new ButtonBuilder()
+        .setCustomId('skip')
+        .setEmoji(emojis.next)
         .setStyle(ButtonStyle.Danger);
 
-      const forward = new ButtonBuilder()
-        .setCustomId('forward')
-        .setEmoji(emojis.forward)
-        .setStyle(ButtonStyle.Success);
-
-      const soundUp = new ButtonBuilder()
-        .setCustomId('sound-up')
-        .setEmoji(emojis.volumefilled)
+      const volumeup = new ButtonBuilder()
+        .setCustomId('volumeup')
+        .setEmoji(emojis.volumeup)
         .setStyle(ButtonStyle.Primary);
 
       const bottomRow = new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(soundDown, backward, clear, forward, soundUp);
-
+        .addComponents(volumelow, next, volumeup);
 
       message.reply({ embeds: [embed], components: [topRow, bottomRow] });
 
