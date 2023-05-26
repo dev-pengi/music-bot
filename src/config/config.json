@@ -1,5 +1,5 @@
 {
-    "embedColor": "#efd53a",
+    "embedColor": "#000000",
     "errorColor": "#dd0000",
     "footer": "",
     "prefix": "v2",
@@ -21,7 +21,7 @@
         "replay": "<:replay:1111514624181932102>",
         "forward": "<:forward:1111514605966069770>",
         "backward": "<:backward:1111514597913022565>",
-        "volumefilled": "<:volumefilled:1111514630741827606>",
+        "volumeup": "<:volumefilled:1111514630741827606>",
         "volumelow": "<:volumelower:1111514636240572426>"
     },
     "line": "https://cdn.discordapp.com/attachments/1077168175503900732/1086209326403821568/37.png"
