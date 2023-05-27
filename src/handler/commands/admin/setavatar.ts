@@ -1,6 +1,6 @@
 import { Client, Message } from "discord.js";
 import { embedReply } from "../../../events/tools";
-import isImageUrl from 'is-image-url';
+// import isImageUrl from 'is-image-url';
 
 export default {
     name: "setavatar",
@@ -11,8 +11,8 @@ export default {
             if (!attachment)
                 throw new Error('يجب hvthr صورتك مع الامر');
 
-            if (!await isImageUrl(attachment))
-                throw new Error('هذه الصورة غير قابلة للاستعمال');
+            // if (!await isImageUrl(attachment))
+            //     throw new Error('هذه الصورة غير قابلة للاستعمال');
 
             await client.user?.setAvatar(attachment);
             embedReply({
