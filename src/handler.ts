@@ -6,6 +6,7 @@ import { YouTubeExtractor } from '@discord-player/extractor';
 import { Player } from 'discord-player';
 
 import { checkCommandModule, checkProperties } from './events/validData';
+import playerEventsExe from './events/player';
 
 // Augment the Client interface to include custom properties
 declare module 'discord.js' {
@@ -102,6 +103,7 @@ function setUpPlayer(client: Client): void {
   });
 
   client.player.extractors.register(YouTubeExtractor, undefined);
+  playerEventsExe(client);
 }
 
 async function executeEvents(client: Client): Promise<void> {
