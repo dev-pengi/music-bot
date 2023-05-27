@@ -33,8 +33,6 @@ export default {
 
             if (!currentTrack)
                 throw new Error('there\'s no song playing for now');
-            if (!queue.getSize())
-                throw new Error('there\'s no next song in the queue');
 
             queue.node.skip();
         } catch (err: any) {
