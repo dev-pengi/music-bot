@@ -2,6 +2,7 @@ import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from
 import { interactionEmbedEdit } from "../../../events/tools";
 import { Player, Track } from "discord-player";
 
+import { clamp } from 'utils-core.js';
 export default {
     name: 'volumedown',
     category: 'Public',
@@ -34,7 +35,7 @@ export default {
             if (!currentTrack) throw new Error('there\'s no song playing for now');
 
             const currentVolume: number = queue.node.volume;
-            const newVolume: number = clamp((currentVolume - 10), 0, 100);
+            const newVolume: number = clamp((currentVolume - 10), 0, 200);
 
             queue.node.setVolume(newVolume);
 
@@ -48,6 +49,3 @@ export default {
         }
     }
 };
-function clamp(value: number, min: number, max: number): number {
-    return Math.min(Math.max(value, min), max);
-}

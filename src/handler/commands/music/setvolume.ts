@@ -1,6 +1,9 @@
 import { Client, Guild, GuildMember, Message, VoiceBasedChannel } from "discord.js";
 import { Player } from "discord-player";
 import { embedReply } from "../../../events/tools";
+
+import { clamp } from 'utils-core.js';
+
 export default {
     name: "setvolume",
     description: "adjust the volume level",
@@ -35,7 +38,7 @@ export default {
             if (isNaN(volumeLevel))
                 throw new Error('please provide a valid volume level');
 
-            const newVolume = clamp(volumeLevel, 0, 100);
+            const newVolume = clamp(volumeLevel, 0, 200);
             queue.node.setVolume(newVolume);
 
             embedReply({ message, content: `the volume has been set to: \`${newVolume}%\`` })
@@ -49,7 +52,3 @@ export default {
         }
     },
 };
-
-function clamp(value: number, min: number, max: number): number {
-    return Math.min(Math.max(value, min), max);
-}
