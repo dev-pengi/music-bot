@@ -12,6 +12,7 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "resolveJsonModule": true,
+        "noUnusedLocals": true
     },
     "include": [
         "src"
