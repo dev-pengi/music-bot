@@ -1,8 +1,8 @@
-import { APIEmbed, ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, Guild, Message, VoiceBasedChannel } from "discord.js";
+import { Client, Guild, Message, TextChannel, VoiceBasedChannel } from "discord.js";
 import { Player, QueryType } from "discord-player";
 import { embedReply } from "../../../events/tools";
 
-import { emojis } from '../../../config/config.json';
+// import { emojis } from '../../../config/config.json';
 
 export default {
   name: "play",
@@ -20,16 +20,14 @@ export default {
       if (!search)
         throw new Error('you have to provide a song name for the song');
 
-      let queue = player.queues.get(guild.id);
-      if (!queue) {
-        queue = player.nodes.create(guild, {
-          metadata: {
-            channel,
-          },
-          leaveOnEmpty: false,
-          leaveOnEnd: false,
-        });
-      }
+      const queue = player.nodes.create(guild, {
+        metadata: {
+          channel: message.channel as TextChannel,
+        },
+        leaveOnEmpty: false,
+        leaveOnEnd: false,
+      });
+
 
       const connection = queue.connection;
 
@@ -54,53 +52,7 @@ export default {
 
       if (!playing) await queue.node.play();
 
-      const embed: APIEmbed = {
-        color: 0,
-        title: `${currentTrack ? 'Track queued' : 'Now Playing'}`,
-        description: `[${track.title}](${track.url})`,
-        thumbnail: {
-          url: `${track.raw.thumbnail}`,
-        },
-        footer: { text: `by ${track.author}・${track.duration}` }
-      }
-
-      const backward = new ButtonBuilder()
-        .setCustomId('songloop')
-        .setEmoji(emojis.replay)
-        .setStyle(ButtonStyle.Primary);
-
-      const pause = new ButtonBuilder()
-        .setCustomId('autoplay')
-        .setEmoji(emojis.play)
-        .setStyle(ButtonStyle.Danger);
-
-      const forward = new ButtonBuilder()
-        .setCustomId('queueloop')
-        .setEmoji(emojis.repeat)
-        .setStyle(ButtonStyle.Primary);
-
-      const topRow = new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(backward, pause, forward);
-
-      const volumelow = new ButtonBuilder()
-        .setCustomId('volumedown')
-        .setEmoji(emojis.volumelow)
-        .setStyle(ButtonStyle.Primary);
-
-      const next = new ButtonBuilder()
-        .setCustomId('skip')
-        .setEmoji(emojis.next)
-        .setStyle(ButtonStyle.Danger);
-
-      const volumeup = new ButtonBuilder()
-        .setCustomId('volumeup')
-        .setEmoji(emojis.volumeup)
-        .setStyle(ButtonStyle.Primary);
-
-      const bottomRow = new ActionRowBuilder<ButtonBuilder>()
-        .addComponents(volumelow, next, volumeup);
-
-      message.reply({ embeds: [embed], components: [topRow, bottomRow] });
+      message.reply(`Added **${track.title} (\`${track.duration}\`)** ${currentTrack ? 'to the queue' : 'to start playing'}.`)
 
     } catch (err: any) {
       embedReply({
