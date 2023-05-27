@@ -1,0 +1,15 @@
+{
+    "tokens": [
+        "MTEwNzQzNjczMTk5MDU0NDUzNQ.GeUT8N.KY-rbVRFZ2G3fUrSQLltanOkCBG47fx5hSmZOQ",
+        "MTExMTk5Mjc0ODk0NjQ4OTQ0Ng.GIeP4T.Rw8Ga0mQWeaOpV7a0VJ53ryvwxYK6Bf-wnITJI",
+        "MTExMTk5Mjk4MDI3MDc0MzYxMg.Gv9aSW.UH_RQPA0vv-O1cBpDwIfxa_G_PS-xddzSj7l5g",
+        "MTExMTk5MzE5NzIxMjczNzU5MA.GC-k2v.D0Yx6PR1Czrq3chpbmojqut9CQ-NbE93Xt6vGQ",
+        "MTExMTk5MzU3MTQyMDE0MzcyOA.Gpg9ld.iYKLYGX7FMXsSypiGnAgGjepxWDKE2EBdRrk-Q",
+        "MTExMTk5MzcxNTAyODkzMDY1MA.GkZaQQ.FJaWENT5HRrA5apKMsk4Ehrjvt8UJg1ET-4ZSI",
+        "MTExMTk5NDA0MTg3NDI1NjAxMg.GekWPb.xKIZhz3MtiE6bOUIe_lHZQgFnkyRfj0etLDKiI",
+        "MTExMTk5NDE0NzU0OTc0MTExNw.GpSMz8.0pgreta9pEP2juApDbfRuY0CuBtElsvItl0GTM",
+        "MTExMTk5NDQxMDk5Mzk4MzUyOQ.G2qYK3.5_RmN7hB3uIo-LP3c-LjqnYZ2kJ7za9gd06QwY",
+        "MTExMTk5NDU2ODU2NTYwNDM5Mg.Gr1C3R.jgFVBS4dnDNH0ha4ULh5m72DQN2Pc61mKcAMvQ"
+    ],
+    "MONGO_URI": "mongodb://siffffdoul:62ufIAnebgxlPunc@ac-5wgmwtc-shard-00-00.ripqiuz.mongodb.net:27017,ac-5wgmwtc-shard-00-01.ripqiuz.mongodb.net:27017,ac-5wgmwtc-shard-00-02.ripqiuz.mongodb.net:27017/dev?ssl=true&replicaSet=atlas-l4tc23-shard-0&authSource=admin&retryWrites=true&w=majority"
+}

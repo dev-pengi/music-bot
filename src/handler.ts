@@ -35,7 +35,6 @@ async function loadCommands(client: Client, commandsDirectory: string): Promise<
       }
 
       client.commands.set(commandModule.name, commandModule);
-      console.log(`Loaded command [${commandName}]`.green);
     }
   }
 }
@@ -55,7 +54,6 @@ async function loadButtons(client: Client, buttonsDirectory: string): Promise<vo
       }
 
       client.buttons.set(buttonModule.name, buttonModule);
-      console.log(`Loaded button [${buttonName}]`.green);
     }
   }
 }
@@ -70,7 +68,6 @@ async function loadEvents(client: Client, clientDirectory: string): Promise<void
     for (const file of eventFiles) {
       const { default: event } = await import(`./handler/client/${folder}/${file}`);
       client.on(eventName, event.bind(null, client));
-      console.log(`Loaded event [${eventName}]`.green);
     }
   }
 }
@@ -100,6 +97,7 @@ function getCommandName(file: string): string {
 
 function setUpPlayer(client: Client): void {
   client.player = new Player(client, {
+    ignoreInstance: true,
     ytdlOptions: {
       quality: 'highest',
     },
@@ -109,11 +107,11 @@ function setUpPlayer(client: Client): void {
   playerEventsExe(client);
 }
 
-async function executeEvents(client: Client): Promise<void> {
-  const bot = await Bot.findOne({ botId: client.user?.id });
+async function executeEvents(client: Client, token: string): Promise<void> {
+  await client.login(token);
+
   client.commands = new Collection();
   client.buttons = new Collection();
-  client.prefix = bot?.prefix ?? '$'
 
   const commandsDirectory = __dirname + '/handler/commands/';
   const buttonsDirectory = __dirname + '/handler/buttons/';
@@ -124,7 +122,12 @@ async function executeEvents(client: Client): Promise<void> {
     await loadButtons(client, buttonsDirectory);
     await loadEvents(client, clientDirectory);
     setUpPlayer(client);
-    console.log('Client events executed successfully.'.green.underline);
+
+    const bot = await Bot.findOne({ botId: client.user?.id });
+    client.prefix = bot?.prefix ?? '$'
+
+
+    console.log(`\nInitilized client: ${client.user?.username}`.cyan);
 
   } catch (error) {
     console.error('Error executing client events:', error);

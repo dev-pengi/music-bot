@@ -1,4 +1,4 @@
-import { GuildQueue, Player, Track, useMetadata } from "discord-player";
+import { GuildQueue, Player, Track } from "discord-player";
 import { APIEmbed, ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, Message, TextChannel } from "discord.js";
 import { emojis } from '../config/config.json';
 
@@ -7,11 +7,11 @@ interface Metadata {
     controlMessage: Message;
 }
 function executeEvents(client: Client) {
+    console.log(client.player.id);
 
     const player: Player = client.player
 
     player.events.on('playerStart', async (queue: GuildQueue, track: Track) => {
-        const [getMetadata, setMetadata] = useMetadata<Metadata>(queue.guild.id);
         const embed: APIEmbed = {
             color: 0,
             title: `Now Playing`,
@@ -61,10 +61,10 @@ function executeEvents(client: Client) {
         const bottomRow = new ActionRowBuilder<ButtonBuilder>()
             .addComponents(volumelow, next, volumeup);
 
-        let { channel, controlMessage } = getMetadata();
+        let { channel, controlMessage } = queue.metadata as Metadata;
         controlMessage = await channel.send({ embeds: [embed], components: [topRow, bottomRow] });
 
-        setMetadata({ channel, controlMessage })
+        queue.setMetadata({ channel, controlMessage })
 
     });
 
@@ -74,21 +74,18 @@ function executeEvents(client: Client) {
 
     player.events.on('playerFinish', async (queue: GuildQueue, track: Track) => {
         console.log('finished')
-        const [getMetadata] = useMetadata<Metadata>(queue.guild.id);
-        let { controlMessage } = getMetadata();
+        let { controlMessage }: any = queue.metadata as Metadata;
         if (controlMessage) controlMessage.delete();
     });
     player.events.on('disconnect', async (queue: GuildQueue) => {
         console.log('finished')
-        const [getMetadata] = useMetadata<Metadata>(queue.guild.id);
-        let { controlMessage } = getMetadata();
+        let { controlMessage }: any = queue.metadata as Metadata;
         if (controlMessage) controlMessage.delete();
     });
 
     player.events.on('emptyQueue', async (queue: GuildQueue) => {
         console.log('finished')
-        const [getMetadata] = useMetadata<Metadata>(queue.guild.id);
-        let { channel, controlMessage } = getMetadata();
+        let { channel, controlMessage }: any = queue.metadata as Metadata;
         if (controlMessage) controlMessage.delete();
 
         const embed: APIEmbed = {
