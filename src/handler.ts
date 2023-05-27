@@ -1,6 +1,5 @@
 import 'colors';
 import 'ffmpeg';
-
 import * as fs from 'fs';
 import { Client, Collection } from 'discord.js';
 import { YouTubeExtractor } from '@discord-player/extractor';
@@ -8,6 +7,7 @@ import { Player } from 'discord-player';
 
 import { checkCommandModule, checkProperties } from './events/validData';
 
+// Augment the Client interface to include custom properties
 declare module 'discord.js' {
   interface Client {
     commands: Collection<string, any>;
@@ -16,7 +16,7 @@ declare module 'discord.js' {
   }
 }
 
-async function loadCommands(client: Client, commandsDirectory: string) {
+async function loadCommands(client: Client, commandsDirectory: string): Promise<void> {
   const commandFolders = await getFolders(commandsDirectory);
 
   for (const folder of commandFolders) {
@@ -26,15 +26,17 @@ async function loadCommands(client: Client, commandsDirectory: string) {
       const commandName = getCommandName(file);
       const { default: commandModule } = await import(`./handler/commands/${folder}/${file}`);
 
-      if (checkCommandModule(commandName, commandModule) && checkProperties(commandName, commandModule)) {
-        client.commands.set(commandModule.name, commandModule);
-        console.log(`Loaded command [${commandName}]`.green);
+      if (!checkCommandModule(commandName, commandModule) || !checkProperties(commandName, commandModule)) {
+        continue;
       }
+
+      client.commands.set(commandModule.name, commandModule);
+      console.log(`Loaded command [${commandName}]`.green);
     }
   }
 }
 
-async function loadButtons(client: Client, buttonsDirectory: string) {
+async function loadButtons(client: Client, buttonsDirectory: string): Promise<void> {
   const buttonFolders = await getFolders(buttonsDirectory);
 
   for (const folder of buttonFolders) {
@@ -44,15 +46,17 @@ async function loadButtons(client: Client, buttonsDirectory: string) {
       const buttonName = file.split('.')[0];
       const { default: buttonModule } = await import(`./handler/buttons/${folder}/${file}`);
 
-      if (checkCommandModule(buttonName, buttonModule) && checkProperties(buttonName, buttonModule)) {
-        client.buttons.set(buttonModule.name, buttonModule);
-        console.log(`Loaded button [${buttonName}]`.green);
+      if (!checkCommandModule(buttonName, buttonModule) || !checkProperties(buttonName, buttonModule)) {
+        continue;
       }
+
+      client.buttons.set(buttonModule.name, buttonModule);
+      console.log(`Loaded button [${buttonName}]`.green);
     }
   }
 }
 
-async function loadEvents(client: Client, clientDirectory: string) {
+async function loadEvents(client: Client, clientDirectory: string): Promise<void> {
   const eventFolders = await getFolders(clientDirectory);
 
   for (const folder of eventFolders) {
@@ -61,7 +65,6 @@ async function loadEvents(client: Client, clientDirectory: string) {
 
     for (const file of eventFiles) {
       const { default: event } = await import(`./handler/client/${folder}/${file}`);
-
       client.on(eventName, event.bind(null, client));
       console.log(`Loaded event [${eventName}]`.green);
     }
@@ -91,7 +94,7 @@ function getCommandName(file: string): string {
   return file.split('.')[0];
 }
 
-function setUpPlayer(client: Client) {
+function setUpPlayer(client: Client): void {
   client.player = new Player(client, {
     ytdlOptions: {
       quality: 'highest',
@@ -101,7 +104,7 @@ function setUpPlayer(client: Client) {
   client.player.extractors.register(YouTubeExtractor, undefined);
 }
 
-function executeEvents(client: Client): void {
+async function executeEvents(client: Client): Promise<void> {
   client.commands = new Collection();
   client.buttons = new Collection();
 
@@ -109,16 +112,15 @@ function executeEvents(client: Client): void {
   const buttonsDirectory = __dirname + '/handler/buttons/';
   const clientDirectory = __dirname + '/handler/client/';
 
-  loadCommands(client, commandsDirectory)
-    .then(() => loadButtons(client, buttonsDirectory))
-    .then(() => loadEvents(client, clientDirectory))
-    .then(() => {
-      setUpPlayer(client);
-      console.log('Client events executed successfully.'.green.underline);
-    })
-    .catch(error => {
-      console.error('Error executing client events:', error);
-    });
+  try {
+    await loadCommands(client, commandsDirectory);
+    await loadButtons(client, buttonsDirectory);
+    await loadEvents(client, clientDirectory);
+    setUpPlayer(client);
+    console.log('Client events executed successfully.'.green.underline);
+  } catch (error) {
+    console.error('Error executing client events:', error);
+  }
 }
 
 export default executeEvents;
