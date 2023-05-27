@@ -2,8 +2,6 @@ import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from
 import { interactionEmbedEdit } from "../../../events/tools";
 import { Player, Track } from "discord-player";
 
-import { clamp } from 'utils-core.js';
-
 export default {
     name: 'volumeup',
     category: 'Public',
@@ -50,3 +48,6 @@ export default {
         }
     }
 };
+function clamp(value: number, min: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
+}

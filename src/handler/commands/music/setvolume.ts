@@ -1,9 +1,6 @@
 import { Client, Guild, GuildMember, Message, VoiceBasedChannel } from "discord.js";
 import { Player } from "discord-player";
 import { embedReply } from "../../../events/tools";
-
-import { clamp } from 'utils-core.js';
-
 export default {
     name: "setvolume",
     description: "adjust the volume level",
@@ -52,3 +49,7 @@ export default {
         }
     },
 };
+
+function clamp(value: number, min: number, max: number): number {
+    return Math.min(Math.max(value, min), max);
+}
