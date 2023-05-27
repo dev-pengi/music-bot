@@ -36,7 +36,7 @@ export default {
       if (!connection)
         await queue.connect(channel);
       else if (channel.id != queue.channel?.id)
-        throw new Error(`you have to join the channel i\'m currently playing in.: <#${queue.channel?.id}>`)
+        throw new Error(`you have to join the channel i\'m currently playing in: <#${queue.channel?.id}>`)
 
       const song = await player.search(search, {
         requestedBy: message.author,
@@ -106,9 +106,7 @@ export default {
       embedReply({
         message,
         content: err.message,
-        bold: true,
         error: true,
-        emoji: emojis.false,
       });
     }
   },
