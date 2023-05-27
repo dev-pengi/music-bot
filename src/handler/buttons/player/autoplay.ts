@@ -1,6 +1,6 @@
 import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from "discord.js";
 import { interactionEmbedEdit } from "../../../events/tools";
-import { Player, Track } from "discord-player";
+import { Player } from "discord-player";
 
 export default {
     name: 'autoplay',
@@ -27,19 +27,18 @@ export default {
             if (!connection)
                 await queue.connect(channel);
             else if (channel.id != queue.channel?.id)
-                throw new Error(`you have to join the channel i\'m currently playing in.: <#${queue.channel?.id}>`)
+                throw new Error(`you have to join the channel i\'m currently playing in: <#${queue.channel?.id}>`)
 
             const status = queue.repeatMode != 3 ? true : false
             queue.setRepeatMode(status ? 3 : 0);
 
-            const replyContent = status ? `the autoplay has been successfuly enabled` : `the autoplay has been successfuly disabled`
+            const replyContent = status ? `the autoplay has been enabled` : `the autoplay has been disabled`
 
             interactionEmbedEdit({ interaction, content: replyContent })
         } catch (err: any) {
             interactionEmbedEdit({
                 interaction,
                 content: err.message,
-                bold: true,
                 error: true,
             });
         }

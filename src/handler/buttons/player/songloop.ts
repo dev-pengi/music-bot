@@ -27,7 +27,7 @@ export default {
             if (!connection)
                 await queue.connect(channel);
             else if (channel.id != queue.channel?.id)
-                throw new Error(`you have to join the channel i\'m currently playing in.: <#${queue.channel?.id}>`)
+                throw new Error(`you have to join the channel i\'m currently playing in: <#${queue.channel?.id}>`)
 
             const currentTrack: Track | null = queue.currentTrack;
             if (!currentTrack) throw new Error('there\'s no song playing for now');
@@ -42,7 +42,6 @@ export default {
             interactionEmbedEdit({
                 interaction,
                 content: err.message,
-                bold: true,
                 error: true,
             });
         }

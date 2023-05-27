@@ -1,4 +1,4 @@
-import { Client, GuildMember, Message, Snowflake } from 'discord.js';
+import { Client, GuildMember, Message } from 'discord.js';
 import { prefix, emojis } from '../../../config/config.json';
 import { embedReply } from '../../../events/tools';
 
@@ -31,7 +31,6 @@ export default async (client: Client, message: Message): Promise<void> => {
     }
     if (permissions) {
         const member: GuildMember | null = message.member;
-        const botId: Snowflake | undefined = client.user?.id;
         if (permissions.user && !member?.permissions.has(permissions.user)) return;
 
     }

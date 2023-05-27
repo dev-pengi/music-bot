@@ -1,5 +1,5 @@
 import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from "discord.js";
-import { interactionEmbed, interactionEmbedEdit, interactionEmbedFollow } from "../../../events/tools";
+import { interactionEmbedFollow } from "../../../events/tools";
 import { Player, Track } from "discord-player";
 
 export default {
@@ -27,7 +27,7 @@ export default {
             if (!connection)
                 await queue.connect(channel);
             else if (channel.id != queue.channel?.id)
-                throw new Error(`you have to join the channel i\'m currently playing in.: <#${queue.channel?.id}>`)
+                throw new Error(`you have to join the channel i\'m currently playing in: <#${queue.channel?.id}>`)
 
             const currentTrack: Track | null = queue.currentTrack;
 
@@ -48,6 +48,3 @@ export default {
         }
     }
 };
-function clamp(value: number, min: number, max: number): number {
-    return Math.min(Math.max(value, min), max);
-}
