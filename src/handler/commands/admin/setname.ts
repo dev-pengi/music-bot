@@ -8,12 +8,12 @@ export default {
         const name = args.join(' ')
         try {
             if (!name)
-                throw new Error('يرحى ارسال الاسم مع الامر')
+                throw new Error('please provide the new name with the command')
 
             await client.user?.setUsername(name);
             embedReply({
                 message,
-                content: `تم تغيير اسم البوت بنجاح`,
+                content: `the bot's name has changed.`,
             });
         } catch (err: any) {
             embedReply({

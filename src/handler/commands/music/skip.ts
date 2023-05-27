@@ -32,6 +32,11 @@ export default {
                 throw new Error('there\'s no song playing in the server');
 
             queue.node.skip();
+
+            embedReply({
+                message,
+                content: `the current song has skipped`
+            })
         } catch (err: any) {
             embedReply({
                 message,

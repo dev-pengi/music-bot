@@ -7,7 +7,7 @@ export default {
     category: 'Public',
     description: 'set the loop mode for the current playing song',
     run: async (client: Client, interaction: ButtonInteraction): Promise<void> => {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply();
         try {
             const guild: Guild = interaction.guild as Guild;
             const member: GuildMember = interaction.member as GuildMember;
@@ -35,9 +35,10 @@ export default {
             const status = queue.repeatMode != 1 ? true : false
             queue.setRepeatMode(status ? 1 : 0);
 
-            const replyContent = status ? `the repeat mode for the current track has been enabled` : `the repeat mode for the current track has been disabled`
+            const replyContent = status ? `enabled` : `disabled`
 
-            interactionEmbedEdit({ interaction, content: replyContent })
+            interactionEmbedEdit({ interaction, content: `\`${interaction.user.tag}\` has ${replyContent} the song repeat mode` })
+
         } catch (err: any) {
             interactionEmbedEdit({
                 interaction,

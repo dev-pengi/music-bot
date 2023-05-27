@@ -7,7 +7,7 @@ export default {
     category: 'Public',
     description: 'decrease the current volume level',
     run: async (client: Client, interaction: ButtonInteraction): Promise<void> => {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply();
         try {
             const guild: Guild = interaction.guild as Guild;
             const member: GuildMember = interaction.member as GuildMember;
@@ -38,7 +38,7 @@ export default {
 
             queue.node.setVolume(newVolume);
 
-            interactionEmbedEdit({ interaction, content: `the volume has been set to: \`${newVolume}%\`` })
+            interactionEmbedEdit({ interaction, content: `\`${interaction.user.tag}\` changed the volume to: \`${Math.floor(newVolume)}%\`` })
         } catch (err: any) {
             interactionEmbedEdit({
                 interaction,

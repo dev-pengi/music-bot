@@ -17,12 +17,12 @@ function executeEvents(client: Client) {
             title: `Now Playing`,
             description: [
                 `[${track.title}](${track.url})`,
-                `- requested by: <@!${track.requestedBy?.id}>`
+                `\`-\` requested by \`:\` <@!${track.requestedBy?.id}>`
             ].join('\n'),
             thumbnail: {
                 url: `${track.raw.thumbnail}`,
             },
-            footer: { text: `by ${track.author}・${track.duration}` }
+            footer: { text: `Volume: ${queue.node.volume}%・${track.duration}` }
         }
 
         const backward = new ButtonBuilder()
