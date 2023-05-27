@@ -36,5 +36,5 @@ process.on('uncaughtExceptionMonitor', (err, origin) => {
 });
 
 // execute events
-connections(client)
+connections(client);
 handler(client);

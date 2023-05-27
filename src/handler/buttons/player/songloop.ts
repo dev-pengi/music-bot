@@ -1,5 +1,5 @@
 import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from "discord.js";
-import { interactionEmbedEdit } from "../../../events/tools";
+import { interactionEmbedFollow } from "../../../events/tools";
 import { Player, Track } from "discord-player";
 
 export default {
@@ -7,7 +7,7 @@ export default {
     category: 'Public',
     description: 'set the loop mode for the current playing song',
     run: async (client: Client, interaction: ButtonInteraction): Promise<void> => {
-        await interaction.deferReply();
+        await interaction.deferUpdate();
         try {
             const guild: Guild = interaction.guild as Guild;
             const member: GuildMember = interaction.member as GuildMember;
@@ -37,13 +37,14 @@ export default {
 
             const replyContent = status ? `enabled` : `disabled`
 
-            interactionEmbedEdit({ interaction, content: `\`${interaction.user.tag}\` has ${replyContent} the song repeat mode` })
+            interactionEmbedFollow({ interaction, content: `\`${interaction.user.tag}\` has ${replyContent} the song repeat mode` })
 
         } catch (err: any) {
-            interactionEmbedEdit({
+            interactionEmbedFollow({
                 interaction,
                 content: err.message,
                 error: true,
+                ephemeral: true,
             });
         }
     }

@@ -1,6 +1,6 @@
 import { GuildQueue, Player, Track, useMetadata } from "discord-player";
 import { APIEmbed, ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, Message, TextChannel } from "discord.js";
-import { emojis, prefix } from '../config/config.json';
+import { emojis } from '../config/config.json';
 
 interface Metadata {
     channel: TextChannel;
@@ -95,7 +95,7 @@ function executeEvents(client: Client) {
             color: 0,
             title: `Queue Ended`,
             description: [
-                `Wanna have more fun? you can play songs using \`${prefix}play [song name]\``,
+                `Wanna have more fun? you can play songs using \`${client.prefix}play [song name]\``,
             ].join('\n'),
         }
         const endMessage = await channel.send({ embeds: [embed] })

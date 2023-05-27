@@ -8,11 +8,14 @@ import { Player } from 'discord-player';
 import { checkCommandModule, checkProperties } from './events/validData';
 import playerEventsExe from './events/player';
 
+import Bot from './models/bot';
+
 // Augment the Client interface to include custom properties
 declare module 'discord.js' {
   interface Client {
     commands: Collection<string, any>;
     buttons: Collection<string, any>;
+    prefix: string;
     player: Player;
   }
 }
@@ -107,8 +110,10 @@ function setUpPlayer(client: Client): void {
 }
 
 async function executeEvents(client: Client): Promise<void> {
+  const bot = await Bot.findOne({ botId: client.user?.id });
   client.commands = new Collection();
   client.buttons = new Collection();
+  client.prefix = bot?.prefix ?? '$'
 
   const commandsDirectory = __dirname + '/handler/commands/';
   const buttonsDirectory = __dirname + '/handler/buttons/';
@@ -120,6 +125,7 @@ async function executeEvents(client: Client): Promise<void> {
     await loadEvents(client, clientDirectory);
     setUpPlayer(client);
     console.log('Client events executed successfully.'.green.underline);
+
   } catch (error) {
     console.error('Error executing client events:', error);
   }

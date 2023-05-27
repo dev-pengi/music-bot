@@ -5,6 +5,9 @@ import { embedReply } from "../../../events/tools";
 export default {
     name: "setavatar",
     description: "change the bot's avatar",
+    permissions: {
+        user: 'Administrator'
+    },
     async run(message: Message, args: string[], client: Client): Promise<void> {
         try {
             const attachment = message.attachments.first()?.url ?? null;

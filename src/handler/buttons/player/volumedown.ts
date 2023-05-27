@@ -1,5 +1,5 @@
 import { Client, ButtonInteraction, Guild, VoiceBasedChannel, GuildMember } from "discord.js";
-import { interactionEmbedEdit } from "../../../events/tools";
+import { interactionEmbedFollow } from "../../../events/tools";
 import { Player, Track } from "discord-player";
 
 export default {
@@ -7,7 +7,7 @@ export default {
     category: 'Public',
     description: 'decrease the current volume level',
     run: async (client: Client, interaction: ButtonInteraction): Promise<void> => {
-        await interaction.deferReply();
+        await interaction.deferUpdate();
         try {
             const guild: Guild = interaction.guild as Guild;
             const member: GuildMember = interaction.member as GuildMember;
@@ -38,12 +38,13 @@ export default {
 
             queue.node.setVolume(newVolume);
 
-            interactionEmbedEdit({ interaction, content: `\`${interaction.user.tag}\` changed the volume to: \`${Math.floor(newVolume)}%\`` })
+            interactionEmbedFollow({ interaction, content: `\`${interaction.user.tag}\` changed the volume to: \`${Math.floor(newVolume)}%\`` })
         } catch (err: any) {
-            interactionEmbedEdit({
+            interactionEmbedFollow({
                 interaction,
                 content: err.message,
                 error: true,
+                ephemeral: true,
             });
         }
     }

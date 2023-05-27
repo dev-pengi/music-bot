@@ -4,6 +4,9 @@ import { embedReply } from "../../../events/tools";
 export default {
     name: "setname",
     description: "change the bot's name",
+    permissions: {
+        user: 'Administrator'
+    },
     async run(message: Message, args: string[], client: Client): Promise<void> {
         const name = args.join(' ')
         try {

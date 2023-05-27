@@ -1,10 +1,12 @@
 import { Client, GuildMember, Message } from 'discord.js';
-import { prefix, emojis } from '../../../config/config.json';
+import { emojis } from '../../../config/config.json';
 import { embedReply } from '../../../events/tools';
 
 export default async (client: Client, message: Message): Promise<void> => {
     if (message.author.bot) return;
     if (!message.guild) return;
+
+    const prefix = client.prefix;
 
     const [commandName, ...args] = message.content.slice(0).trim().split(/ +/);
 
