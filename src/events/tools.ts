@@ -1,6 +1,5 @@
 import {
     ButtonInteraction,
-    SelectMenuInteraction,
     MessageComponentInteraction,
     ModalSubmitInteraction,
     CommandInteraction,
@@ -18,13 +17,13 @@ const getColor = (error: boolean = false): number => {
 }
 
 
-type InteractionTypes = CommandInteraction | ButtonInteraction | SelectMenuInteraction | MessageComponentInteraction | ModalSubmitInteraction
+type InteractionTypes = CommandInteraction | ButtonInteraction | MessageComponentInteraction | ModalSubmitInteraction
 
 interface InteractionEmbedOptions {
     interaction: InteractionTypes;
     content: string;
-    ephemeral?: boolean;
     error?: boolean;
+    ephemeral?: boolean;
     bold?: boolean;
     emoji?: string;
 }
@@ -68,43 +67,28 @@ interface EmbedEditOptions {
     emoji?: string;
 }
 
-function interactionEmbed({ interaction, content, ephemeral, error, bold, emoji }: InteractionEmbedOptions): Promise<any> {
+function interactionEmbed({ interaction, content, error, ephemeral, bold, emoji }: InteractionEmbedOptions): Promise<any> {
     if (!interaction) throw new Error('Invalid interaction');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
 
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
-
     try {
-        return interaction.reply({ embeds: [embed], ephemeral: ephemeral });
+        return interaction.reply({ content, ephemeral: ephemeral });
     } catch (err: any) {
         throw new Error(err.message);
     }
 }
 
-function interactionEmbedFollow({ interaction, content, ephemeral, error, bold, emoji }: InteractionEmbedOptions): Promise<any> {
+function interactionEmbedFollow({ interaction, content, error, ephemeral, bold, emoji }: InteractionEmbedOptions): Promise<any> {
     if (!interaction) throw new Error('Invalid interaction');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
-
     try {
-        return interaction.followUp({ embeds: [embed], ephemeral: ephemeral });
+        return interaction.followUp({ content, ephemeral: ephemeral });
     } catch (err: any) {
         throw new Error(err.message);
     }
@@ -116,98 +100,60 @@ function interactionEmbedEdit({ interaction, content, error, bold, emoji }: Inte
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
-
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
-
     try {
-        return interaction.editReply({ embeds: [embed] });
+        return interaction.editReply({ content });
     } catch (err: any) {
         throw new Error(err);
     }
 }
 
-async function embed({ channel, content = '', error, bold, emoji }: EmbedOptions): Promise<Message> {
+async function embed({ channel, content = '', bold, emoji }: EmbedOptions): Promise<Message> {
     if (!channel) throw new Error('Invalid channel');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
     try {
-        return channel.send({ embeds: [embed] });
+        return channel.send({ content });
     } catch (err: any) {
         throw new Error(err.message);
     }
 }
-async function embedMember({ member, content = '', error, bold, emoji }: embedMemberOptions): Promise<Message> {
+async function embedMember({ member, content = '', bold, emoji }: embedMemberOptions): Promise<Message> {
     if (!member) throw new Error('Invalid member');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
     try {
-        return member.send({ embeds: [embed] });
+        return member.send({ content });
     } catch (err: any) {
         throw new Error(err.message);
     }
 }
 
-async function embedReply({ message, content, error, bold, emoji }: EmbedReplyOptions): Promise<Message> {
+async function embedReply({ message, content, bold, emoji }: EmbedReplyOptions): Promise<Message> {
     if (!message) throw new Error('Invalid message');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
 
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
     try {
-        return message.reply({ embeds: [embed] });
+        return message.reply({ content });
     } catch (err: any) {
         throw new Error(err.message);
     }
 }
 
-async function embedEdit({ message, content, error, bold, emoji }: EmbedEditOptions): Promise<Message> {
+async function embedEdit({ message, content, bold, emoji }: EmbedEditOptions): Promise<Message> {
     if (!message) throw new Error('Invalid message');
     if (!content.trim().length) throw new Error('Message cannot be empty');
     if (emoji) content = `${emoji} | ${content}`;
     if (bold) content = `**${content}**`;
 
-
-    const color: number = getColor(error);
-
-    const embed: any = {
-        description: content,
-        color
-    };
-
     try {
-        return message.edit({ embeds: [embed] });
+        return message.edit({ content });
     } catch (err: any) {
         throw new Error(err.message);
     }
@@ -232,4 +178,6 @@ export {
     embedReply,
     embedEdit,
     wait,
+    getColor,
+    hexToInt,
 };
